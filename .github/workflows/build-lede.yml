@@ -38,11 +38,10 @@ jobs:
 
     - name: Load custom feeds
       working-directory: ./openwrt
-      #[ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
-      #        chmod +x $DIY_P1_SH
-      #  $GITHUB_WORKSPACE/
+      #[ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default   
       run: |
-        $DIY_P1_SH
+        chmod +x $GITHUB_WORKSPACE/$DIY_P1_SH
+        $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: Update & Install feeds
       working-directory: ./openwrt
