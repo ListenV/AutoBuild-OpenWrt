@@ -3,9 +3,6 @@
 # iptvhelper
 #git clone --depth=1 https://github.com/riverscn/openwrt-iptvhelper package/luci-app-iptvhelper
 
-# netspeedtest 网络测速
-#git clone --depth=1 https://github.com/sirpdboy/netspeedtest package/netspeedtest
-
 # 高级系统设置 包括smartdns，openclash，防火墙，DHCP等。（内置luci-app-fileassistant文件助手）
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-advanced package/luci-app-advanced
 
