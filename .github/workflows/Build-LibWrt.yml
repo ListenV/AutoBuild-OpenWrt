@@ -1,0 +1,74 @@
+name: Build LibWrt
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+
+env:
+  REPO_URL: https://github.com/LiBwrt/openwrt-6.x
+  REPO_BRANCH: kernal-6.12
+  CONFIG_FILE: libwrt.config
+  PRE_SH: libwrt-pre.sh
+  POST_SH: libwrt-post.sh
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: 初始化环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.eu.org/init_build_environment.sh)'
+
+    - name: 克隆Wrt源代码
+      run: |
+        git clone --depth 1 -b $REPO_BRANCH --single-branch $REPO_URL openwrt
+
+    - name: 执行 pre 脚本
+      working-directory: ./openwrt
+      #[ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+      run: |
+        chmod +x $GITHUB_WORKSPACE/$PRE_SH
+        $GITHUB_WORKSPACE/$PRE_SH
+
+    - name: Update & Install feeds
+      working-directory: ./openwrt
+      run: |
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+
+    - name: move config file
+      run: |
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+
+    - name: 执行 post 脚本
+      working-directory: ./openwrt
+      run: |
+        chmod +x $GITHUB_WORKSPACE/$POST_SH
+        $GITHUB_WORKSPACE/$POST_SH
+
+    - name: Download package
+      working-directory: ./openwrt
+      run: |
+        make defconfig
+        make download -j$(nproc)
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+
+    - name: Compile the firmware
+      working-directory: ./openwrt
+      run: |
+        echo -e "$(nproc) thread compile"
+        make V=s -j$(nproc)
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@main
+      with:
+        name: OpenWrt
+        path: openwrt/bin
