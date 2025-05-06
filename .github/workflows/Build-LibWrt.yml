@@ -49,8 +49,8 @@ jobs:
     - name: 执行 post 脚本
       working-directory: ./openwrt
       run: |
-        sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' ./openwrt/feeds/luci/collections/luci-light/Makefile
-        sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' ./openwrt/feeds/luci/collections/luci-nginx/Makefile
+        sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-light/Makefile
+        sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-nginx/Makefile
 
     - name: Download package
       working-directory: ./openwrt
