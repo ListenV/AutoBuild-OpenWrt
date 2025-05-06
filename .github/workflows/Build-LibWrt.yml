@@ -34,8 +34,7 @@ jobs:
       working-directory: ./openwrt
       #[ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
       run: |
-        chmod +x $GITHUB_WORKSPACE/$PRE_SH
-        $GITHUB_WORKSPACE/$PRE_SH
+        git apply ../ax1800pro.patch
 
     - name: Update & Install feeds
       working-directory: ./openwrt
@@ -50,8 +49,8 @@ jobs:
     - name: 执行 post 脚本
       working-directory: ./openwrt
       run: |
-        chmod +x $GITHUB_WORKSPACE/$POST_SH
-        $GITHUB_WORKSPACE/$POST_SH
+        sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' ./openwrt/feeds/luci/collections/luci-light/Makefile
+        sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' ./openwrt/feeds/luci/collections/luci-nginx/Makefile
 
     - name: Download package
       working-directory: ./openwrt
