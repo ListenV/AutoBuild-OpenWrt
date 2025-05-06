@@ -1,0 +1,49 @@
+diff --git a/package/base-files/files/bin/config_generate b/package/base-files/files/bin/config_generate
+index d280ff7..f63ab73 100755
+--- a/package/base-files/files/bin/config_generate
++++ b/package/base-files/files/bin/config_generate
+@@ -162,7 +162,7 @@ generate_network() {
+ 		static)
+ 			local ipad
+ 			case "$1" in
+-				lan) ipad=${ipaddr:-"192.168.1.1"} ;;
++				lan) ipad=${ipaddr:-"10.1.1.1"} ;;
+ 				*) ipad=${ipaddr:-"192.168.$((addr_offset++)).1"} ;;
+ 			esac
+ 
+diff --git a/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-re-ss-01.dts b/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-re-ss-01.dts
+index a4e96ab..6c77953 100644
+--- a/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-re-ss-01.dts
++++ b/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-re-ss-01.dts
+@@ -12,15 +12,15 @@
+ #include <dt-bindings/leds/common.h>
+ 
+ / {
+-	model = "JDCloud RE-SS-01";
++	model = "JDCloud AX1800 Pro";
+ 	compatible = "jdcloud,re-ss-01", "qcom,ipq6018";
+ 
+ 	aliases {
+ 		serial0 = &blsp1_uart3;
+ 
+-		led-boot = &led_status_blue;
++		led-boot = &led_status_green;
+ 		led-failsafe = &led_status_red;
+-		led-running = &led_status_green;
++		led-running = &led_status_blue;
+ 		led-upgrade = &led_status_red;
+ 
+ 		ethernet1 = &dp2;
+diff --git a/target/linux/qualcommax/image/ipq60xx.mk b/target/linux/qualcommax/image/ipq60xx.mk
+index 38c1220..073f32c 100644
+--- a/target/linux/qualcommax/image/ipq60xx.mk
++++ b/target/linux/qualcommax/image/ipq60xx.mk
+@@ -288,7 +288,7 @@ define Device/jdcloud_re-ss-01
+ 	$(call Device/FitImage)
+ 	$(call Device/EmmcImage)
+ 	DEVICE_VENDOR := JDCloud
+-	DEVICE_MODEL := RE-SS-01
++	DEVICE_MODEL := AX1800 Pro
+ 	BLOCKSIZE := 128k
+ 	KERNEL_SIZE := 6144k
+ 	SOC := ipq6000
