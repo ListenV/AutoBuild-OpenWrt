@@ -22,7 +22,7 @@ jobs:
       fileDate: ${{ env.FILE_DATE }}
 
     steps:
-    - name: Check Server Performance
+    - name: 检查服务器配置
       run: |
         echo "已知CPU型号(降序): 7763，8370C，8272CL，8171M，E5-2673"
         echo "--------------------------CPU信息--------------------------"
@@ -34,13 +34,6 @@ jobs:
         echo -e "$(sudo lshw -short -C memory | grep GiB)\n"
         echo "--------------------------硬盘信息--------------------------"
         echo "硬盘数量: $(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
-
-    - name: Before freeing up disk space
-      run: |
-        echo "Before freeing up disk space"
-        echo "=============================================================================="
-        df -hT
-        echo "=============================================================================="
 
     - name: 清除无用依赖
       uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.1"
