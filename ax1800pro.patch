@@ -11,6 +11,16 @@ index d280ff7..f63ab73 100755
  				*) ipad=${ipaddr:-"192.168.$((addr_offset++)).1"} ;;
  			esac
  
+diff --git a/package/kernel/mac80211/files/pbuf.uci b/package/kernel/mac80211/files/pbuf.uci
+index ffbbc8c..24f2d35 100755
+--- a/package/kernel/mac80211/files/pbuf.uci
++++ b/package/kernel/mac80211/files/pbuf.uci
+@@ -5,4 +5,4 @@ config general opt
+   # option memory_profile '1gb'
+   # option memory_profile '512mb'
+   # option memory_profile '256mb'
+-  option scaling_governor 'performance'
++  option scaling_governor 'schedutil'
 diff --git a/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-re-ss-01.dts b/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-re-ss-01.dts
 index a4e96ab..6c77953 100644
 --- a/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-re-ss-01.dts
