@@ -56,6 +56,10 @@ jobs:
         npm_clean: "True"
         os_swap: "True"
 
+    - name: 初始化环境
+      run: |
+        sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.org/init_build_environment.sh)'
+
     - name: 最大化磁盘空间（利用LVM组合磁盘）
       uses: easimon/maximize-build-space@master
       with: 
@@ -76,10 +80,6 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@main
-
-    - name: 初始化环境
-      run: |
-        sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.org/init_build_environment.sh)'
 
     - name: 克隆Wrt源代码
       run: |
