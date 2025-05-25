@@ -1,5 +1,5 @@
 diff --git a/package/base-files/files/bin/config_generate b/package/base-files/files/bin/config_generate
-index d280ff7..f63ab73 100755
+index 9c693cb..1077824 100755
 --- a/package/base-files/files/bin/config_generate
 +++ b/package/base-files/files/bin/config_generate
 @@ -162,7 +162,7 @@ generate_network() {
@@ -11,16 +11,15 @@ index d280ff7..f63ab73 100755
  				*) ipad=${ipaddr:-"192.168.$((addr_offset++)).1"} ;;
  			esac
  
-diff --git a/package/kernel/mac80211/files/pbuf.uci b/package/kernel/mac80211/files/pbuf.uci
-index ffbbc8c..24f2d35 100755
---- a/package/kernel/mac80211/files/pbuf.uci
-+++ b/package/kernel/mac80211/files/pbuf.uci
-@@ -5,4 +5,4 @@ config general opt
-   # option memory_profile '1gb'
-   # option memory_profile '512mb'
-   # option memory_profile '256mb'
--  option scaling_governor 'performance'
-+  option scaling_governor 'schedutil'
+@@ -311,7 +311,7 @@ generate_static_system() {
+ 	uci -q batch <<-EOF
+ 		delete system.@system[0]
+ 		add system system
+-		set system.@system[-1].hostname='LibWRT'
++		set system.@system[-1].hostname='Router'
+ 		set system.@system[-1].timezone='CST-8'
+ 		set system.@system[-1].zonename='Asia/Shanghai'
+ 		set system.@system[-1].ttylogin='0'
 diff --git a/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-re-ss-01.dts b/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-re-ss-01.dts
 index a4e96ab..6c77953 100644
 --- a/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-re-ss-01.dts
@@ -45,10 +44,10 @@ index a4e96ab..6c77953 100644
  
  		ethernet1 = &dp2;
 diff --git a/target/linux/qualcommax/image/ipq60xx.mk b/target/linux/qualcommax/image/ipq60xx.mk
-index 38c1220..073f32c 100644
+index 7278f79..b34df76 100644
 --- a/target/linux/qualcommax/image/ipq60xx.mk
 +++ b/target/linux/qualcommax/image/ipq60xx.mk
-@@ -288,7 +288,7 @@ define Device/jdcloud_re-ss-01
+@@ -300,7 +300,7 @@ define Device/jdcloud_re-ss-01
  	$(call Device/FitImage)
  	$(call Device/EmmcImage)
  	DEVICE_VENDOR := JDCloud
