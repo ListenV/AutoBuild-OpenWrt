@@ -59,6 +59,7 @@ jobs:
     - name: 初始化环境
       run: |
         sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.org/init_build_environment.sh)'
+        sudo apt install -y libboost-system-dev
 
     - name: 最大化磁盘空间（利用LVM组合磁盘）
       uses: easimon/maximize-build-space@master
