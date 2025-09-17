@@ -7,9 +7,9 @@ on:
 env:
   REPO_URL: https://github.com/LiBwrt/openwrt-6.x
   REPO_BRANCH: k6.12-nss
-  CONFIG_FILE: libwrt.config
-  PRE_SH: libwrt-pre.sh
-  POST_SH: libwrt-post.sh
+  CONFIG_FILE: LibWrt/LibWrt.config
+  PRE_SH: LibWrt/pre.sh
+  POST_SH: LibWrt/post.sh
   TZ: Asia/Shanghai
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -61,15 +61,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
-    - name: 克隆Wrt源代码
+    - name: 克隆LibWrt源码
       run: |
         git clone --depth 1 -b $REPO_BRANCH --single-branch $REPO_URL openwrt
 
-    - name: 执行 pre 脚本
+    - name: 执行 前置 脚本
       working-directory: ./openwrt
-      #[ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
       run: |
-        git apply ../ax1800pro.patch
+        [ -e $GITHUB_WORKSPACE/$PRE_SH ] && chmod +x $GITHUB_WORKSPACE/$PRE_SH
+        $GITHUB_WORKSPACE/$PRE_SH
 
     - name: Update & Install feeds
       working-directory: ./openwrt
@@ -81,12 +81,13 @@ jobs:
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
 
-    #- name: 执行 post 脚本
-    #  working-directory: ./openwrt
-    #  run: |
-    #    sed -i 's/luci-light/luci-nginx/g' feeds/luci/collections/luci/Makefile
+    - name: 执行 后置 脚本
+      working-directory: ./openwrt
+      run: |
+        [ -e $GITHUB_WORKSPACE/$POST_SH ] && chmod +x $GITHUB_WORKSPACE/$POST_SH
+        $GITHUB_WORKSPACE/$POST_SH
 
-    - name: Download package
+    - name: Make Download
       working-directory: ./openwrt
       run: |
         make defconfig
