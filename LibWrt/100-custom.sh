@@ -1,13 +1,14 @@
 #!/bin/sh
 
-uci -q batch << EOF
+uci batch << EOF
 
-set network.lan.ipaddr='10.1.1.1'
+set network.lan.ipaddr='10.1.1.1/24'
+del network.wan6
 
 commit network
 
 set dhcp.lan.start='50'
-set dhcp.lan.limit='100'
+set dhcp.lan.limit='51'
 
 commit dhcp
 
@@ -21,5 +22,3 @@ set system.@system[0].conloglevel='6'
 commit system
 
 EOF
-
-exit 0
