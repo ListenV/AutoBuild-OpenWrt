@@ -11,3 +11,4 @@ mv ../LibWrt/100-custom.sh  ./package/base-files/files/etc/uci-defaults/
 # filetransfer
 #git clone --depth=1 https://github.com/QC3284/luci-app-filetransfer.git package/z-custom/luci-app-filetransfer
 
+echo 'pre.sh execution completed!'

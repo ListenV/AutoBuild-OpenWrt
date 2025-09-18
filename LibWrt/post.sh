@@ -6,3 +6,5 @@
 
 # 修改luci默认web服务器
 #sed -i 's/luci-light/luci-nginx/g' feeds/luci/collections/luci/Makefile
+
+echo 'post.sh execution completed!'
