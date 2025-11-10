@@ -20,8 +20,6 @@ set system.@system[0].hostname='Router'
 set system.@system[0].zram_size_mb='128'
 set system.@system[0].zram_comp_algo='zstd'
 
-set system.@system[0].conloglevel='6'
-
 commit system
 
 EOF
