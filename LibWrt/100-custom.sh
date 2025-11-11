@@ -12,6 +12,7 @@ del dhcp.lan.dhcp_option
 add_list dhcp.lan.dhcp_option='6,10.1.1.1'
 set dhcp.lan.start='50'
 set dhcp.lan.limit='51'
+del dhcp.wan6
 
 commit dhcp
 
